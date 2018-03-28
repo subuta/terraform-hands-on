@@ -28,6 +28,13 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
+resource "aws_iam_role_policy_attachment" "attach_s3_policy_to_lambda" {
+  role = "${aws_iam_role.iam_for_lambda.name}"
+  // set ARN of IAM Policy
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+
 resource "aws_lambda_function" "test_lambda" {
   filename = "./lambda/dist/terraform-hands-on.zip"
   # switch function_name based on current workspace.
