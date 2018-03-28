@@ -1,2 +1,8 @@
 # terraform-hands-on
-start experimenting terraform step by step.
+
+Only Japanese text available currently.
+
+Terraformのハンズオンのためのリポジトリです。
+スライドはコチラにまとめてあります。
+
+SEE: https://gitpitch.com/subuta/terraform-hands-on/master

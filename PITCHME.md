@@ -1,21 +1,24 @@
-# hoge
+# terraform-hands-on
 
-hoge
+### 前提条件
 
----
-
-# fuga
-
-> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+- `Terraform v0.11.2`
+- `macOS Sierra v10.12.3`
+- `aws-cli` および `terraform` を使うために必要なアカウントは用意されてるものとします。
+  - `terraform-hands-on` という `profile` で `~/.aws/credentials` が定義されている前提とします。
 
 ---
 
-# piyo
+### [step1] リポジトリをcloneする。
 
-piyo
+```
+git clone https://github.com/subuta/terraform-hands-on
+```
 
-- hoge
-- fuga
-- piyo
+---
+
+### [step2] lambdaを書く。
+
+```
+git checkout -b steps/1-create-first-lambda
+```
