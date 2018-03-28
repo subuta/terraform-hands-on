@@ -40,7 +40,16 @@ resource "aws_lambda_function" "test_lambda" {
 
   environment {
     variables = {
-      foo = "bar"
+      Environment = "${terraform.workspace}"
     }
+  }
+}
+
+resource "aws_s3_bucket" "default" {
+  bucket = "terraform-hands-on-bucket-${terraform.workspace}"
+  acl    = "private"
+
+  tags {
+    Environment = "${terraform.workspace}"
   }
 }
