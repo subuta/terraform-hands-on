@@ -19,10 +19,20 @@ git clone https://github.com/subuta/terraform-hands-on
 
 ---
 
+### [Step1] lambdaのデプロイ
+
+シンプルなlambdaを作ります。
+
+1. lambdaを作る。
+2. lambdaのデプロイの設定(terraform)を書く。
+3. lambdaをデプロイする。
+
+---
+
 ### [Step1] ブランチの切り替え
 
 ```bash
-git checkout -b steps/1-terraform-basics
+git checkout -b steps/1-lambda-basics
 ```
 
 ---
@@ -34,21 +44,10 @@ git checkout -b steps/1-terraform-basics
 
 ---
 
-### [Step1] lambdaを作る
+### [Step1] 1. lambdaを作る
 
-- *resource "リソース種別" "リソース名" {}* と書く事で作る設定を定義する。
-- lambdaの場合は *resource "aws_lambda_function" "test_lambda" {}* のように書くことで定義できる。
-- 現状の [main.tf](./main.tf) にはこんな定義がある。
-  - *aws_iam_role* -> lambdaの実行用のIAMロールの定義
-  - *aws_lambda_function* -> 登録されるlambdaの定義
-
----
-
-### [Step1] lambdaのデプロイの準備をする。
-
-- *lambda/functions/terraform-hands-on* にlambdaの実装(index.js)が置いてある。
-- lambdaをデプロイするためには、ディレクトリ構造毎zipにする必要があるので、以下のコマンドでzip化する。
-  -> 今回は `functions/zip.js` でzip化しますが、好きな方法でやっていただいて良いです。
+- 今回は *lambda/functions/terraform-hands-on* にlambdaの実装(index.js)は置いてある。
+- lambdaをデプロイするためには、[ディレクトリ構造を抜いたzipにする必要がある](https://stackoverflow.com/questions/41750026/aws-lambda-error-cannot-find-module-var-task-index)ので、以下のコマンドでzip化する。
 
 ```
 cd lambda
@@ -57,7 +56,17 @@ cd lambda
 
 ---
 
-### [step1] lambdaのデプロイを検証する。
+### [Step1] 2. lambdaのデプロイの設定(terraform)を書く。
+
+- *resource "リソース種別" "リソース名" {}* と書く事で作る設定を定義する。
+- lambdaの場合は *resource "aws_lambda_function" "test_lambda" {}* のように書くことで定義できる。
+- [main.tf](./main.tf) にこんな感じで書く。
+  - *aws_iam_role* -> lambdaの実行用のIAMロールの定義
+  - *aws_lambda_function* -> 登録されるlambdaの定義
+
+---
+
+### [step1] 2.1 lambdaのデプロイを検証する。
 
 以下のコマンドを実行する。
 
@@ -71,7 +80,7 @@ terraform plan
 
 ---
 
-### [step1] workspaceの切り替え
+### [step1] 2.2 workspaceの切り替え
 
 そのままだとlambdaの名前が被っちゃうので、workspaceを切り替えて対応する。
 
@@ -85,7 +94,7 @@ terraform plan
 
 ---
 
-### [step1] lambdaをデプロイする。
+### [step1] 3. lambdaをデプロイする。
 
 以下のコマンドを実行する。
 
@@ -107,3 +116,62 @@ terraform plan --destroy
 # terraformによる削除を実行する。
 terraform destroy
 ```
+
+---
+
+### [Step2] lambdaのデプロイ+S3
+
+S3 Bucket上にファイルを置くlambdaを作ります。
+
+1. S3 Bucketを作る設定(terraform)を書く。
+2. ファイルを置く処理をlambdaに書く。
+3. lambdaをデプロイする。
+
+---
+
+### [Step2] ブランチの切り替え
+
+```bash
+git checkout -b steps/2-advanced-lambda
+```
+
+---
+
+### [Step2] 1. S3 Bucketを作る設定(terraform)を書く。
+
+- S3 Bucketの場合は *resource "aws_s3_bucket" "default" {}* のように書くことで定義できる。
+- [main.tf](./main.tf) を追記する。
+  - *aws_s3_bucket* -> S3 Bucketの定義
+
+---
+
+### [Step2] 2. ファイルを置く処理をlambdaに書く。
+
+こんな流れで実装済み。
+
+1. *aws-sdk* を読み込む。
+2. s3.putObject で任意の内容をBucketに置く(書き込む)
+
+ファイルを更新したら、以下のコマンドでzipしなおす。
+
+```
+cd lambda
+./zip.js
+```
+
+---
+
+### [Step2] 3. lambdaをデプロイする。
+
+以下のコマンドを実行する。
+
+```
+# terraformを実行する。
+terraform apply
+```
+
+---
+
+### おわり
+
+以上です。ご静聴ありがとうございました! 🙇
