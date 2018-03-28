@@ -172,6 +172,63 @@ terraform apply
 
 ---
 
+### [Step2] lambdaを実行してみる。
+
+...と分かるように、適切な実行権限(IAMRole)を設定してやらないと、
+S3 Bucketへのアクセスが拒否(Access Denied)されます。
+次のStepではこちらの対応をしていきます。
+
+---
+
+---
+
+### [Step3] lambdaのIAMRoleを修正する。
+
+1. IAMRoleに適切な権限を付与する設定(terraform)を書く。
+2. IAMRoleの修正をデプロイする。
+
+---
+
+### [Step3] ブランチの切り替え
+
+```bash
+git checkout -b steps/3-fix-lambda-iam-role
+```
+
+---
+
+### [Step3] 1. IAMRoleに適切な権限を付与する設定(terraform)を書く。
+
+- IAMRoleの設定(*aws_iam_role*)は既に存在する。
+- 今回は権限が足りないので、IAMRoleに権限を付与(*aws_iam_role_policy_attachment*)してやることで解決する。
+- [main.tf](./main.tf) を追記する。
+  - *aws_iam_role_policy_attachment* -> IAMRoleへIAMPolicyを付与する設定
+  - *AmazonS3FullAccess* -> S3へのフルアクセスを許可するポリシー(AWSの組み込み定義)
+
+---
+
+### [Step3] 2. lambdaをデプロイする。
+
+以下のコマンドを実行する。
+
+```
+# terraformを実行する。
+terraform apply
+```
+
+---
+
+### [Step3] lambdaを実行してみる。
+
+直った！(はず
+
+---
+
+### まとめ
+
+- 当たり前ではありますが、変更履歴をterraformに残せるのは便利
+- 便利なものの複雑な構成を作ると色々落とし穴はあるので、頑張りましょう 🤤
+
 ### おわり
 
 以上です。ご静聴ありがとうございました! 🙇
