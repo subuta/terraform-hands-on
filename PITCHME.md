@@ -57,7 +57,7 @@ cd lambda
 
 ---
 
-### [step1] terraformを使ってlambdaをデプロイする。
+### [step1] lambdaのデプロイを検証する。
 
 以下のコマンドを実行する。
 
@@ -67,14 +67,36 @@ terraform init
 
 # terraform実行による差分(行われる変更内容)を確かめる
 terraform plan
+```
 
+---
+
+### [step1] workspaceの切り替え
+
+そのままだとlambdaの名前が被っちゃうので、workspaceを切り替えて対応する。
+
+```
+# workspaceを *hoge* へ切り替える。
+terraform workspace new hoge
+
+# terraform実行による差分(行われる変更内容)を確かめる
+terraform plan
+```
+
+---
+
+### [step1] lambdaをデプロイする。
+
+以下のコマンドを実行する。
+
+```
 # terraformを実行する。
 terraform apply
 ```
 
 ---
 
-### [step1] 作ったlambdaを削除する。
+### [step1] lambdaを削除する。
 
 以下のコマンドを実行する。
 
