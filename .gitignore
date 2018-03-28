@@ -1,3 +1,5 @@
+lambda/dist/*.zip
+
 ### Terraform related files.
 # SEE: https://github.com/github/gitignore/blob/master/Terraform.gitignore
 

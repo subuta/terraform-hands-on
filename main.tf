@@ -7,3 +7,39 @@ provider "aws" {
   region = "ap-northeast-1"
   version = "~> 1.7.1"
 }
+
+resource "aws_iam_role" "iam_for_lambda" {
+  name = "iam_for_lambda"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_lambda_function" "test_lambda" {
+  filename = "./lambda/dist/terraform-hands-on.zip"
+  function_name = "terraform-hands-on"
+  role = "${aws_iam_role.iam_for_lambda.arn}"
+  handler = "index.handler"
+  // detect file changes by hash of zip file.
+  source_code_hash = "${base64sha256(file("./lambda/dist/terraform-hands-on.zip"))}"
+  runtime = "nodejs6.10"
+
+  environment {
+    variables = {
+      foo = "bar"
+    }
+  }
+}
