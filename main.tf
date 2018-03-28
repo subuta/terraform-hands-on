@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
+  name = "iam_for_lambda${terraform.workspace != "default" ? "-${terraform.workspace}" : ""}"
 
   assume_role_policy = <<EOF
 {
