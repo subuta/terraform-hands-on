@@ -180,8 +180,6 @@ S3 Bucketへのアクセスが拒否(Access Denied)されます。
 
 ---
 
----
-
 ### [Step3] lambdaのIAMRoleを修正する。
 
 1. IAMRoleに適切な権限を付与する設定(terraform)を書く。
